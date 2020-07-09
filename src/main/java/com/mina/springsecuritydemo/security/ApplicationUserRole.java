@@ -1,14 +1,16 @@
 package com.mina.springsecuritydemo.security;
 
 import com.google.common.collect.Sets;
-import org.springframework.security.authentication.jaas.AuthorityGranter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.mina.springsecuritydemo.security.ApplicationUserPermission.*;
+import static com.mina.springsecuritydemo.security.ApplicationUserPermission.COURSE_READ;
+import static com.mina.springsecuritydemo.security.ApplicationUserPermission.COURSE_WRITE;
+import static com.mina.springsecuritydemo.security.ApplicationUserPermission.STUDENT_READ;
+import static com.mina.springsecuritydemo.security.ApplicationUserPermission.STUDENT_WRITE;
 
 public enum ApplicationUserRole {
     STUDENT(Sets.newHashSet()),
@@ -28,7 +30,7 @@ public enum ApplicationUserRole {
     public Set<SimpleGrantedAuthority> getAuthorityGranters() {
         Set<SimpleGrantedAuthority> authorities = getPermissions()
                 .stream()
-                .map(permission -> new SimpleGrantedAuthority(permission.name()))
+                .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
         authorities.add(new SimpleGrantedAuthority("ROLE_" + this.name()));
         return authorities;
