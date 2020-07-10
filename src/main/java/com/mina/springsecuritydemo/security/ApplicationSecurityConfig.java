@@ -49,7 +49,14 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()// default is 2 week
                 .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-                .key("somethingVerySecured");
+                .key("somethingVerySecured")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .clearAuthentication(true)
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID","remember-me")
+                .logoutSuccessUrl("/login");
 
     }
 
